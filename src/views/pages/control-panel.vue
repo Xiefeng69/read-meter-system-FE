@@ -42,31 +42,13 @@
 import ListShow from '@/components/listShow.vue';
 import GridShow from '@/components/gridShow.vue';
 import Toast from '@/components/toast.vue';
+import axios from 'axios';
 
 export default {
     data() {
         return {
             uploadFileToast: false,
-            rawDataDetails: [
-                {
-                    filename: 'template.png',
-                    date: '2021-04-17',
-                    status: 'success',
-                    result: 18.5
-                },
-                {
-                    filename: 'template1.png',
-                    date: '2021-04-17',
-                    status: 'warning',
-                    result: 18.5
-                },
-                {
-                    filename: 'template2.png',
-                    date: '2021-04-18',
-                    status: 'error',
-                    result: 200.5
-                }
-            ]
+            rawDataDetails: []
         }
     },
     components: {
@@ -95,6 +77,11 @@ export default {
             }
             return afterDataDetails;
         }
+    },
+    created() {
+        axios.get('http://localhost:3000/public/').then((res) => {
+            this.rawDataDetails = [...res.data.data]
+        })
     }
 }
 </script>

@@ -27,7 +27,7 @@ const router = new VueRouter({
             component: () => import('../views/pages/about-system.vue')
         },
         {
-            path: '/meter-detail',
+            path: '/meter-detail/:id',
             name: 'meterDetail',
             component: () => import('../views/pages/meter-detail.vue')
         }

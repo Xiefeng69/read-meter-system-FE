@@ -1,5 +1,6 @@
 <template>
-    <router-link class="list-item" :class="[id%2 === 0 ? 'item-even' : 'item-odd']" to="/meter-detail" tag="div">
+    <!--v-bind动态绑定后to属性不再是字符串而是表达式-->
+    <router-link class="list-item" :class="[id%2 === 0 ? 'item-even' : 'item-odd']" :to="`/meter-detail/${id}`" tag="div">
         <div class="filename">{{ filename }}</div>
         <div class="date">{{ date }}</div>
         <div class="status">
@@ -28,7 +29,7 @@ export default {
             type: String
         },
         result: {
-            type: Number
+            type: String
         }
     }
 }

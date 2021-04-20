@@ -1,5 +1,5 @@
 <template>
-    <router-link class="grid-item" to="/meter-detail" tag="div">
+    <router-link class="grid-item" :to="`/meter-detail/${id}`" tag="div">
         <div class="filename">{{ filename }}</div>
         <div class="date">{{ date }}</div>
         <div class="status">
@@ -25,7 +25,7 @@ export default {
             type: String
         },
         result: {
-            type: Number
+            type: String
         },
         id: {
             type: Number

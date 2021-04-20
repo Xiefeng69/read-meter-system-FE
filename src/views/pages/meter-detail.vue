@@ -7,20 +7,20 @@
         </div>
         <div class="abstract">
             <div>
-                template.png
+                {{ absData.filename }}
                 <div style="cursor: pointer">
                     <img src="@/assets/copy.png" />
                     <span>copy url</span>
                 </div>
             </div>
             <div class="status">
-                <div v-if="status === 'success'" class="status-success"></div>
-                <div v-if="status === 'warning'" class="status-warning"></div>
-                <div v-if="status === 'error'" class="status-error"></div>
-                <span>{{ status }}</span>
+                <div v-if="absData.status === 'success'" class="status-success"></div>
+                <div v-if="absData.status === 'warning'" class="status-warning"></div>
+                <div v-if="absData.status === 'error'" class="status-error"></div>
+                <span>{{ absData.status }}</span>
             </div>
-            <div>date: 2021-04-18</div>
-            <div>detect result: 18.5</div>
+            <div>date: {{ absData.date }}</div>
+            <div>detect result: {{ absData.result }}</div>
         </div>
         <div class="detail">
             <div class="detail-title">
@@ -41,10 +41,10 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
-            status: "error",
             detailList: [
                 'origin image',
                 'object detection',
@@ -55,8 +55,18 @@ export default {
                 'LSD line detect',
                 'pointer refine',
                 'final result'
-            ]
+            ],
+            absData: {},
+            detData: {}
         }
+    },
+    created() {
+        // console.log(this.$route.params);
+        axios.get(`http://localhost:3000/public/meter-details?id=${this.$route.params.id}`).then((res) => {
+            console.log(res);
+            this.absData = { ...res.data.data.absData }
+            this.detData = { ...res.data.data.detData }
+        })
     }
 }
 </script>
