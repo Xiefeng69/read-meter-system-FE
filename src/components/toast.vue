@@ -8,8 +8,8 @@
                     <img src="@/assets/add.png" @click="this.closeToast" />
                 </div>
                 <p>* 仅接受png，jpg和jpeg格式图片</p>
-                <input name="upfile" type="file" accept="image/png,image/jpg,image/jpeg" />
-                <div class="upload-btn">
+                <input name="upfile" type="file" accept="image/png,image/jpg,image/jpeg" @change="changeFile" />
+                <div class="upload-btn" @click="uploadFile">
                     <img src="@/assets/upload.png" alt="">
                     上传
                 </div>
@@ -19,10 +19,32 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+    data() {
+        return {
+            targetFile: null
+        }
+    },
     methods: {
         closeToast(){
             this.$emit('setToastClose')
+        },
+        changeFile(e) {
+            // 也可以直接使用refs
+            this.targetFile = e.target.files[0]
+        },
+        uploadFile() {
+            let formData = new FormData()
+            //let path = this.targetFile['path']
+            formData.append('file', this.targetFile)
+            axios.post('http://localhost:3000/public/upload-image', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then((res) => {
+                if(res.data.status === 200) {
+                    this.closeToast()
+                }
+            })
         }
     }
 }
