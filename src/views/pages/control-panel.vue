@@ -45,6 +45,7 @@ import Toast from '@/components/toast.vue';
 import axios from 'axios';
 
 export default {
+    inject: ['reload'],
     data() {
         return {
             uploadFileToast: false,
@@ -63,7 +64,11 @@ export default {
         changeToGrid() {
             this.$store.commit('changeToGrid');
         },
-        closeToast() {
+        closeToast(payload) {
+            if(payload?.reloadPage) {
+                // 确定刷新页面
+                this.reload()
+            }
             this.uploadFileToast = false;
         }
     },

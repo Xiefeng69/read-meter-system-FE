@@ -30,21 +30,28 @@ export default {
         closeToast(){
             this.$emit('setToastClose')
         },
+        closeToastandReload() {
+            this.$emit('setToastClose', {'reloadPage': true})
+        },
         changeFile(e) {
             // 也可以直接使用refs
             this.targetFile = e.target.files[0]
         },
         uploadFile() {
-            let formData = new FormData()
-            //let path = this.targetFile['path']
-            formData.append('file', this.targetFile)
-            axios.post('http://localhost:3000/public/upload-image', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            }).then((res) => {
-                if(res.data.status === 200) {
-                    this.closeToast()
-                }
-            })
+            if(this.targetFile) {
+                let formData = new FormData()
+                //let path = this.targetFile['path']
+                formData.append('file', this.targetFile)
+                axios.post('http://localhost:3000/public/upload-image', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                }).then((res) => {
+                    if(res.data.status === 200) {
+                        this.closeToastandReload()
+                    }
+                })
+            } else {
+                console.log('选择上传文件');
+            }
         }
     }
 }

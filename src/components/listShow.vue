@@ -1,16 +1,17 @@
 <template>
     <!--v-bind动态绑定后to属性不再是字符串而是表达式-->
-    <router-link class="list-item" :class="[id%2 === 0 ? 'item-even' : 'item-odd']" :to="`/meter-detail/${id}`" tag="div">
+    <div class="list-item" :class="[id%2 === 0 ? 'item-even' : 'item-odd']" @click="routeToDetail">
         <div class="filename">{{ filename }}</div>
         <div class="date">{{ date }}</div>
         <div class="status">
             <div v-if="status === 'success'" class="status-success"></div>
             <div v-if="status === 'warning'" class="status-warning"></div>
             <div v-if="status === 'error'" class="status-error"></div>
+            <div v-if="status === 'pending'" class="status-pending"></div>
             <span>{{ status }}</span>
         </div>
         <div class="result">{{ result }}</div>
-    </router-link>
+    </div>
 </template>
 
 <script>
@@ -30,6 +31,16 @@ export default {
         },
         result: {
             type: String
+        }
+    },
+    methods: {
+        routeToDetail() {
+            // this.$router.go(-1) 回退
+            if(this.status !== 'pending') {
+                this.$router.push(`/meter-detail/${this.id}`)
+            } else {
+                console.log('pending中不可访问');
+            }
         }
     }
 }
@@ -81,6 +92,12 @@ export default {
     height: 6px;
     border-radius: 50%;
     background: red;
+}
+.status-pending {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #aaa;
 }
 .status span {
     margin-left: 4px;
