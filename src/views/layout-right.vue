@@ -1,10 +1,12 @@
 <template>
     <div class="main-content">
+        <Popup v-show="this.$store.state.isPopupShow " />
         <router-view v-if="isRouterAlive" />
     </div>
 </template>
 
 <script>
+import Popup from '@/components/popUp.vue';
 export default {
     /* provide和inject用于父组件向子组件传递数据 */
     provide (){
@@ -25,12 +27,15 @@ export default {
                 this.isRouterAlive = true
             })
         }
+    },
+    components: {
+        Popup
     }
 }
 </script>
 
 <style scoped>
-/* .main-content {
-    padding: 30px 35px 0 35px;
-} */
+.main-content {
+    position: relative;
+}
 </style>

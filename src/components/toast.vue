@@ -46,10 +46,18 @@ export default {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then((res) => {
                     if(res.data.status === 200) {
+                        this.$store.commit('setPopupState', {
+                            type: 'success',
+                            text: '上传成功'
+                        })
                         this.closeToastandReload()
                     }
                 })
             } else {
+                this.$store.commit('setPopupState', {
+                    type: 'error',
+                    text: '选择上传文件'
+                })
                 console.log('选择上传文件');
             }
         }
@@ -59,18 +67,18 @@ export default {
 
 <style scoped>
 .background {
-    width: 100%;
+    width: calc(100% - 100px);
     height: 100vh;
-    position: absolute;
+    position: fixed;
     background: black;
     z-index: 10;
     opacity: 0.8;
 }
 .toast-bg {
-    width: 100%;
+    width: calc(100% - 100px);
     height: 100vh;
     background: transparent;
-    position: absolute;
+    position: fixed;
     z-index: 10;
     color: #333;
     display: flex;

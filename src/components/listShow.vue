@@ -40,6 +40,10 @@ export default {
                 this.$router.push(`/meter-detail/${this.id}`)
             } else {
                 console.log('pending中不可访问');
+                this.$store.commit('setPopupState', {
+                    type: 'error',
+                    text: 'pending中不可访问'
+                })
             }
         }
     }
