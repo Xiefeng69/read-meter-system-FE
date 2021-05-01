@@ -2,9 +2,14 @@
     <div class="main">
         <Toast v-show="uploadFileToast" @setToastClose="closeToast" />
         <div id="controller">
-            <div class="add-image-box" @click="()=>{uploadFileToast=!uploadFileToast}">
-                <img class="add-image-icon" src="../../assets/add.png" />
-                上传图片
+            <div style="display: flex; flex-direction: row">
+                <div class="add-image-box" @click="()=>{uploadFileToast=!uploadFileToast}">
+                    <img class="add-image-icon" src="../../assets/add.png" />
+                    上传图片
+                </div>
+                <div class="refresh-box" @click="refreshPage">
+                    <img style="width: 20px;" src="../../assets/refresh.png" />
+                </div>
             </div>
             <div class="controller-box">
                 <div class="controller-box-item controller-active" @click="changeToList">
@@ -70,6 +75,9 @@ export default {
                 this.reload()
             }
             this.uploadFileToast = false;
+        },
+        refreshPage() {
+            this.reload();
         }
     },
     computed: {
@@ -119,6 +127,16 @@ export default {
 .add-image-icon {
     width: 18px;
     margin-right: 2px;
+}
+.refresh-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    background: rgb(244, 244, 244);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 8px;
 }
 .controller-box {
     width: 100px;
