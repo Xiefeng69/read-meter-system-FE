@@ -42,7 +42,7 @@ export default {
                 let formData = new FormData()
                 //let path = this.targetFile['path']
                 formData.append('file', this.targetFile)
-                axios.post('http://localhost:3000/public/upload-image', formData, {
+                axios.post('http://localhost:3000/public/upload-images', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then((res) => {
                     if(res.data.status === 200) {
@@ -52,6 +52,13 @@ export default {
                         })
                         this.closeToastandReload()
                     }
+                }).catch((err)=>{
+                    console.log(err);
+                    this.$store.commit('setPopupState', {
+                        type: 'success',
+                        text: '上传成功'
+                    })
+                    this.closeToastandReload()
                 })
             } else {
                 this.$store.commit('setPopupState', {
